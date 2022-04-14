@@ -8,11 +8,21 @@ import Web3 from 'web3'
 * 5. Get user balance
 */
 
-let getWeb3 = new Promise(function (resolve, reject) {
+let getWeb3 = new Promise(async function (resolve, reject) {
   // Check for injected web3 (mist/metamask)
-  var web3js = window.web3
-  if (typeof web3js !== 'undefined') {
-    var web3 = new Web3(web3js.currentProvider)
+  var ethereum = window.ethereum
+  if (typeof ethereum !== 'undefined') {
+    // ethereum.sendAsync('eth_requestAccounts')
+    try {
+      // Request account access if needed
+      // const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+      const accounts = await ethereum.request({ method: 'eth_accounts' })
+      // Acccounts now exposed
+      console.log('accounts', accounts)
+    } catch (error) {
+      // User denied account access...
+    }
+    var web3 = new Web3(ethereum)
     resolve({
       injectedWeb3: web3.isConnected(),
       web3 () {
