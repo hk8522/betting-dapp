@@ -12,11 +12,10 @@ let getWeb3 = new Promise(async function (resolve, reject) {
   // Check for injected web3 (mist/metamask)
   var ethereum = window.ethereum
   if (typeof ethereum !== 'undefined') {
-    // ethereum.sendAsync('eth_requestAccounts')
     try {
       // Request account access if needed
-      // const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
-      const accounts = await ethereum.request({ method: 'eth_accounts' })
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' })
+      // const accounts = await ethereum.request({ method: 'eth_accounts' })
       // Acccounts now exposed
       console.log('accounts', accounts)
     } catch (error) {
@@ -29,6 +28,32 @@ let getWeb3 = new Promise(async function (resolve, reject) {
         return web3
       }
     })
+
+    // var params = [
+    //   {
+    //     from: '0x9eF4289A58a29818C2fBBf504A18D69D098502B6',
+    //     to: '0x9eF4289A58a29818C2fBBf504A18D69D098502B6',
+    //     gas: '0x76c0', // 30400
+    //     gasPrice: '0x9184e72a000', // 10000000000000
+    //     // value: '0x9184e72a', // 2441406250
+    //     value: '0x74000000000000',
+    //     data:
+    //       '0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675'
+    //   }
+    // ]
+    // ethereum
+    //   .request({
+    //     method: 'eth_sendTransaction',
+    //     params
+    //   })
+    //   // .then((result) => {
+    //   //   // The result varies by RPC method.
+    //   //   // For example, this method will return a transaction hash hexadecimal string on success.
+    //   // })
+    //   .catch((error) => {
+    //     // If the request fails, the Promise will reject with an error.
+    //     console.log(error)
+    //   })
   } else {
     // web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545')) GANACHE FALLBACK
     reject(new Error('Unable to connect to Metamask'))
